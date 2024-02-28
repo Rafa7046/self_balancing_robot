@@ -18,8 +18,8 @@
 		<visual>
 			<geometry>
 				<!--<box size = "0.075 0.175 0.157"/> -->
-				<mesh filename ="package://self_balancing_robot/meshes/Assem_No_wheelTiny.dae"/> 
-				<!--<mesh filename ="package://self_balancing_robot/meshes/Assem2_No_Wheel.STL"/>-->
+				<mesh filename ="/home/glauberrleite/dev/tcc/self_balancing_robot/urdf/meshes/Assem_No_wheelTiny.dae"/> 
+				<!--<mesh filename ="/home/glauberrleite/dev/tcc/self_balancing_robot/urdf/meshes/Assem2_No_Wheel.STL"/>-->
 			</geometry>
 			<origin rpy = "0 0 0" xyz ="0 0 0.0"/> 
 			
@@ -45,7 +45,7 @@
 		</collision>
 		<visual>
 			<geometry>
-			<mesh filename="package://self_balancing_robot/meshes/WheelZTiny.dae"/>
+			<mesh filename="/home/glauberrleite/dev/tcc/self_balancing_robot/urdf/meshes/WheelZTiny.dae"/>
 			</geometry>
 			
 			<origin rpy = "0 0 0" xyz = ".005 0.160 0.010"/>  
@@ -76,7 +76,7 @@
 		</collision>
 		<visual>
 			<geometry>
-				<mesh filename="package://self_balancing_robot/meshes/WheelZTiny.dae"/>
+				<mesh filename="/home/glauberrleite/dev/tcc/self_balancing_robot/urdf/meshes/WheelZTiny.dae"/>
 			</geometry>
 			
 			<origin rpy = "0 0 0" xyz = "0.005 -0.015 0.010"/> 
