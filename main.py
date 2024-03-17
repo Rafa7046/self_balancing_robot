@@ -13,7 +13,7 @@ def sysCall_init():
 
     rclpy.init()
 
-    self.robot = RobotSimul(robot_handle, left_wheel_handle, right_wheel_handle)
+    self.robot = RobotSimul(sim, robot_handle, left_wheel_handle, right_wheel_handle)
 
 def sysCall_sensing():
     self.robot.publish_pose()

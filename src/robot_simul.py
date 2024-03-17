@@ -6,8 +6,9 @@ import numpy as np
 import math
 
 class RobotSimul(Node):
-    def __init__(self, robot_handle, left_wheel_handle, right_wheel_handle):
+    def __init__(self, sim, robot_handle, left_wheel_handle, right_wheel_handle):
         super().__init__('robot_simul')
+        self.sim = sim
         self.pid = PID_Controller()
         self.robot_handle = robot_handle
         self.left_wheel_handle = left_wheel_handle
@@ -24,10 +25,10 @@ class RobotSimul(Node):
         self.publish_wheel_velocities(Float64(data=9.0))
 
     def callback_lw(self, msg : Float64):
-        sim.setJointTargetVelocity(self.left_wheel_handle, msg.data)
+        self.sim.setJointTargetVelocity(self.left_wheel_handle, msg.data)
 
     def callback_rw(self, msg : Float64):
-        sim.setJointTargetVelocity(self.right_wheel_handle, msg.data)
+        self.sim.setJointTargetVelocity(self.right_wheel_handle, msg.data)
 
     def publish_wheel_velocities(self, msg):
         # print(msg.data)
@@ -43,7 +44,7 @@ class RobotSimul(Node):
         yaw   =  math.asin(2*x*y + 2*z*w)*180/math.pi
         print(roll)
         # vel = sim.getJointVelocity(self.left_wheel_handle)
-        wheels_velocities = self.pid.getCorrection(-0.1, roll)
+        wheels_velocities = self.pid.getCorrection(0.0, roll)
 
         msg = Float64()
         msg.data = np.clip(wheels_velocities, -30, 30)
@@ -53,7 +54,7 @@ class RobotSimul(Node):
     def publish_pose(self):
         # Getting pose relative to the base
         # pose: pose array: [x y z qx qy qz qw]
-        pose = sim.getObjectPose(self.robot_handle)
+        pose = self.sim.getObjectPose(self.robot_handle)
         
         # Creating the JointState structure
         msg = Pose()
