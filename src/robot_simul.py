@@ -1,11 +1,10 @@
-import rclpy
-from rclpy.node import Node
-
-from std_msgs.msg import Float64
-from geometry_msgs.msg import Pose
-import math
 from src.pidcontrol import PID_Controller
+from geometry_msgs.msg import Pose
+from std_msgs.msg import Float64
+from rclpy.node import Node
 import numpy as np
+import math
+
 class RobotSimul(Node):
     def __init__(self, robot_handle, left_wheel_handle, right_wheel_handle):
         super().__init__('robot_simul')
@@ -68,26 +67,3 @@ class RobotSimul(Node):
         
         # Publishing message
         self.pose_pub.publish(msg)
-
-
-def sysCall_init():
-    sim = require('sim')
-
-    left_wheel_handle = sim.getObject('./Left_wheel_Joint')
-    right_wheel_handle = sim.getObject('./Right_wheel_Joint')
-
-    robot_handle = sim.getObject('.')
-
-    print(sim.getObjectPose(robot_handle))
-
-    rclpy.init()
-
-    self.robot = RobotSimul(robot_handle, left_wheel_handle, right_wheel_handle)
-
-def sysCall_sensing():
-    self.robot.publish_pose()
-    rclpy.spin_once(self.robot, timeout_sec=0)
-
-def sysCall_cleanup():
-    self.robot.destroy_node()
-    rclpy.shutdown()
