@@ -22,7 +22,8 @@ class RobotSimul(Node):
         self.rw_pub = self.create_publisher(Float64, 'right_wheel/cmd_vel', 10)
 
         self.pose_pub = self.create_publisher(Pose, 'pose', 10)
-        self.publish_wheel_velocities(Float64(data=9.0))
+        self.publish_wheel_velocities(Float64(data=0.0))
+        self.erros = []
 
     def callback_lw(self, msg : Float64):
         self.sim.setJointTargetVelocity(self.left_wheel_handle, msg.data)
@@ -39,15 +40,15 @@ class RobotSimul(Node):
     def callback_pose(self, pose : Pose):
         x, y, z, w = pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w
 
-        roll  = math.atan2(2*y*w - 2*x*z, 1 - 2*y*y - 2*z*z)
+        roll  = math.atan2(2*y*w - 2*x*z, 1 - 2*y*y - 2*z*z)*180/math.pi
         pitch = math.atan2(2*x*w - 2*y*z, 1 - 2*x*x - 2*z*z)*180/math.pi
         yaw   =  math.asin(2*x*y + 2*z*w)*180/math.pi
-        print(roll)
+        # print(roll)
         # vel = sim.getJointVelocity(self.left_wheel_handle)
-        wheels_velocities = self.pid.getCorrection(0.0, roll)
-
+        wheels_velocities, error = self.pid.getCorrection(0.0, roll)
+        self.erros.append(error)
         msg = Float64()
-        msg.data = np.clip(wheels_velocities, -30, 30)
+        msg.data = np.clip(wheels_velocities, -26, 26)
 
         self.publish_wheel_velocities(msg)
     
