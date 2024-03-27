@@ -36,9 +36,6 @@ class PID_Controller(object):
     
         self.t += dt
         self.Eprev = E
-        # if correction > 0 and correction < 10:
-        #     return -10.0
-        # elif correction < 0 and correction > -10:
-        #     return 5.0
-        return -correction, (self.t, E)
+        
+        return -correction
     
