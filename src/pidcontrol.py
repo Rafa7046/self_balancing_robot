@@ -5,7 +5,7 @@ class PID_Controller(object):
     General PID control class. 
     '''
 
-    def __init__(self, Kp = 34.0, Ki = 0.10, Kd = 0.62):
+    def __init__(self, Kp = 2.40, Ki = 10.0, Kd = 0.10):
         '''
         Constructs a new PID_Controller object.
         '''

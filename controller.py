@@ -16,8 +16,8 @@ class Controller(Node):
 
         self.controller = PID_Controller()
 
-        self.physics = self.create_publisher(bool, 'physics', 10)
-        self.physics.publish(True)
+        # self.physics = self.create_publisher(bool, 'physics', 10)
+        # self.physics.publish(True)
 
     def publish_wheel_velocities(self, msg):
         self.lw_pub.publish(msg)
@@ -30,11 +30,11 @@ class Controller(Node):
         roll  = math.atan2(2*y*w - 2*x*z, 1 - 2*y*y - 2*z*z)*180/math.pi
         pitch = math.atan2(2*x*w - 2*y*z, 1 - 2*x*x - 2*z*z)*180/math.pi
         yaw   =  math.asin(2*x*y + 2*z*w)*180/math.pi
-        # print(roll)
         # vel = sim.getJointVelocity(self.left_wheel_handle)
         wheels_velocities = self.controller.getCorrection(0.0, roll)
         msg = Float64()
-        msg.data = np.clip(wheels_velocities, -26, 26)
+        msg.data = np.clip(wheels_velocities, -35, 35)
+        print(f"{roll} -> {msg.data}")
 
         self.publish_wheel_velocities(msg)
 
